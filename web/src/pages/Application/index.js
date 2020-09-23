@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useHistory } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import './styles.css';
 import api from '../../services/api';
 
-export default function Main() {
+export const Application = () => {
 
   const [user,setUser] = useState([{}]);
   const [products, setProducts] = useState([]);
