@@ -16,25 +16,34 @@ module.exports = {
   },
 
   async index(req,res) {
-    const { id } = req.params; 
+    const { id } = req.params;
+    //  user_id => 100
+
+    const userCheck = await connection('products')
+      .where('user_id', id)
+
+    if (!userCheck) {
+      return res.status(401).json({ error: 'No user with this ID'});
+    }
+
     const product = await connection('products')
       .where('user_id',id)
-      .select('*');
-      
+      .select( 'id', 'title', 'price' );
+    
     return res.json(product);
   },
 
   async delete(req,res) {
-    const { user_id ,id } = req.params;
+    const { id } = req.params;
 
     const deleteProduct = await connection('products')
-      .where({user_id, id})
+      .where({id})
       .delete()
     
     if (!deleteProduct) {
-      return res.json({message: 'Cannot delete, not found'});
+      return res.status(404).json({message: 'Cannot delete, not found'});
     }
 
-    return res.status(204).send();
+    return res.status(200).send();
   },
-}
+} 

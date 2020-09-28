@@ -12,6 +12,6 @@ routes.get('/user/:id', user.indexSingle);
 
 routes.post('/products', product.create);
 routes.get('/products/:id', product.index);
-routes.delete('/products/:user_id/:id', product.delete);
+routes.delete('/products/:id', product.delete);
 
 module.exports = routes;

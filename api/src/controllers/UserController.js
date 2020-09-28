@@ -32,11 +32,15 @@ module.exports = {
   async delete(req,res) {
     const { id } = req.params;
 
-    await connection('users')
+    const user = await connection('users')
       .where({id})
       .delete();
+    
+    if (!user) {
+      return res.status(401).json({ error: 'No user with this ID'});
+    }
 
-    return res.status(204).send();
+    return res.status(200).send();
   },
 
   async indexSingle(req,res) {
